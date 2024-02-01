@@ -1,13 +1,13 @@
-package com.example.LoginApi;
+package com.example.AuthAPI;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LoginApiApplication {
+public class LoginApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LoginApiApplication.class, args);
+		SpringApplication.run(LoginApplication.class, args);
 	}
 
 }

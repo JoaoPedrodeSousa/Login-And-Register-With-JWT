@@ -1,13 +1,10 @@
-package com.example.LoginApi.entities;
+package com.example.AuthAPI.model.Entities;
 
-public class LoginRequestDTO {
+public class LoginReq {
     private String username;
     private String password;
 
-    public LoginRequestDTO() {
-    }
-
-    public LoginRequestDTO(String username, String password) {
+    public LoginReq(String username, String password) {
         this.username = username;
         this.password = password;
     }

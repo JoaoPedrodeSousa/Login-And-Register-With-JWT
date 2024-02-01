@@ -1,9 +1,9 @@
-package com.example.LoginApi.entities;
+package com.example.AuthAPI.model.Entities;
 
-public class LoginResponseDTO {
+public class LoginRes {
     private String token;
 
-    public LoginResponseDTO(String token) {
+    public LoginRes(String token) {
         this.token = token;
     }
 
