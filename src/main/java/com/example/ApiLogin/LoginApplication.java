@@ -1,4 +1,4 @@
-package com.example.AuthAPI;
+package com.example.ApiLogin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
