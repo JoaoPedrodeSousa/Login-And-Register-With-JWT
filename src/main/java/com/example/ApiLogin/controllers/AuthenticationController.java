@@ -1,11 +1,10 @@
 package com.example.ApiLogin.controllers;
 
-import com.example.ApiLogin.entities.AuthenticationDTO;
-import com.example.ApiLogin.entities.LoginResponseDTO;
-import com.example.ApiLogin.entities.RegisterDTO;
-import com.example.ApiLogin.entities.User;
+import com.example.ApiLogin.entities.*;
 import com.example.ApiLogin.infra.security.JWTGenerator;
 import com.example.ApiLogin.repositories.UserRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +27,20 @@ public class AuthenticationController {
     private JWTGenerator tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
+    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO request, HttpServletResponse response){
+        var usernamePassword = new UsernamePasswordAuthenticationToken(User.username(), User.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
 
+        Cookie cookie = new Cookie("JWT", token);
+
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(JWTConstants.JWT_EXPIRATION / 1000);
+
+        response.addCookie(cookie);
+
+        // Alter return after tests
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
