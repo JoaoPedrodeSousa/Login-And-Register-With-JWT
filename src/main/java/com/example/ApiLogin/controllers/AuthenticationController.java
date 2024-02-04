@@ -7,31 +7,31 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("auth")
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
+@RequestMapping(value = "auth", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     private UserRepository repository;
     @Autowired
-    private JWTGenerator tokenService;
+    private JWTGenerator jwtGenerator;
 
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO request, HttpServletResponse response){
-        var usernamePassword = new UsernamePasswordAuthenticationToken(User.username(), User.password());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
+    @PostMapping(value = "/login")
+    public ResponseEntity login(@RequestBody @Valid LoginRequestDTO request, HttpServletResponse response){
+        var usernamePassword = new UsernamePasswordAuthenticationToken(request.username(), request.password());
+        var authentication = authenticationManager.authenticate(usernamePassword);
 
-        var token = tokenService.generateToken((User) auth.getPrincipal());
+        var token = jwtGenerator.generateToken((User) authentication.getPrincipal());
 
         Cookie cookie = new Cookie("JWT", token);
 
@@ -40,19 +40,21 @@ public class AuthenticationController {
 
         response.addCookie(cookie);
 
-        // Alter return after tests
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
-        if(this.repository.findByUsername(data.username()) != null) return ResponseEntity.badRequest().build();
+    @PostMapping(value = "/register")
+    public ResponseEntity register(@RequestBody RegisterDTO data){
+        if(repository.findByUsername(data.username()) != null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         User newUser = new User(data.username(), encryptedPassword, data.role());
 
-        this.repository.save(newUser);
-
-        return ResponseEntity.ok().build();
+        repository.save(newUser);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
+
+
