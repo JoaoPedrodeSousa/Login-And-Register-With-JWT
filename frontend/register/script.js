@@ -1,44 +1,39 @@
-const btn = document.querySelector(".btn");
-const inputs = document.querySelectorAll("input");
+const btn = document.querySelector("button");
+const inputUsername = document.querySelector(".input-username");
+const inputPassword = document.querySelector(".input-password");
+const inputRole = document.querySelector(".input-role");
+const url = "http://localhost:8080/auth/register";
 
-const users = [];
-
-function redirect(url) {
-  window.location.href = url;
-}
-
-function isUnique(username) {
-  console.log("oi");
-  if (users.includes(username)) {
-    inputs[0].classList.add("usernameError");
-
-    inputs[0].setAttribute(
-      "placeholder",
-      "Username exists, please, replace Username and try again"
-    );
-    return;
-  }
-  return true;
-}
-
-function newUser(username, password) {
-  return {
-    username: username,
-    password: password,
-  };
-}
-
-function handleBtnClick(event) {
+btn.addEventListener("click", async (event) => {
   event.preventDefault();
 
-  const username = inputs[0].value;
-  const password = inputs[1].value;
+  const data = {
+    username: inputUsername.value,
+    password: inputPassword.value,
+    role: inputRole.value,
+  };
 
-  if (isUnique(username)) {
-    const user = newUser(username, password);
-    users.push(user);
-  }
-  console.log(users);
-}
-
-btn.addEventListener("click", handleBtnClick);
+  // Enviar os dados para o backend
+  await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+    mode: "no-cors",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          "Erro ao enviar os dados para o backend: " + response.status
+        );
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Dados recebidos do backend:", data);
+    })
+    .catch((error) => {
+      console.error("Erro:", error);
+    });
+});
