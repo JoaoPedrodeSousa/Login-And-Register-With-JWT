@@ -4,14 +4,14 @@ const inputPassword = document.querySelector(".input-password");
 const inputRole = document.querySelector(".input-role");
 const url = "http://localhost:8080/auth/register";
 
-btn.addEventListener("click", async (event) => {
+const formEl = document.querySelector(".form-div");
+
+formEl.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const data = {
-    username: inputUsername.value,
-    password: inputPassword.value,
-    role: inputRole.value,
-  };
+  const formData = new FormData(formEl);
+
+  const data = Object.fromEntries(formData);
 
   // Enviar os dados para o backend
   await fetch(url, {
@@ -20,7 +20,6 @@ btn.addEventListener("click", async (event) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-    mode: "no-cors",
   })
     .then((response) => {
       if (!response.ok) {

@@ -33,7 +33,8 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable());
+                .csrf(csrf -> csrf.disable()).cors(cors -> cors.configure(http));
+
         http
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
@@ -60,16 +61,27 @@ public class WebSecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
-        CorsConfiguration config = new CorsConfiguration()
-                .applyPermitDefaultValues()
-                .setAllowedOriginPatterns(Collections.singletonList("http://127.0.0.1:5500/"));
-
-        config.addAllowedHeader("Access-Control-Allow-Origin");
+        CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
 
         UrlBasedCorsConfigurationSource cors = new UrlBasedCorsConfigurationSource();
         cors.registerCorsConfiguration("/**", config);
 
         return cors;
     }
+
+
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource(){
+//        CorsConfiguration config = new CorsConfiguration()
+//                .applyPermitDefaultValues()
+//                .setAllowedOriginPatterns(Collections.singletonList("http://127.0.0.1:5500/"));
+//
+//        config.addAllowedHeader("Access-Control-Allow-Origin");
+//
+//        UrlBasedCorsConfigurationSource cors = new UrlBasedCorsConfigurationSource();
+//        cors.registerCorsConfiguration("/**", config);
+//
+//        return cors;
+//    }
 
 }
