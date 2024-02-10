@@ -33,14 +33,13 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()).cors(cors -> cors.configure(http));
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configure(http));
 
         http
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/login/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register/**").permitAll()
                         .anyRequest().authenticated()
                 );
         http

@@ -45,7 +45,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<?> register(@RequestBody RegisterDTO data){
+    public ResponseEntity register(@RequestBody RegisterDTO data){
         if(repository.findByUsername(data.username()) != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -55,9 +55,7 @@ public class AuthenticationController {
 
         repository.save(newUser);
 
-        System.out.println(data.username());
-        System.out.println(data.password());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
 
