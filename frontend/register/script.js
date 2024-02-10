@@ -46,9 +46,6 @@ form.addEventListener("submit", async (event) => {
 
       return response.ok;
     })
-    .then((data) => {
-      console.log("Dados recebidos:", data);
-    })
     .catch((error) => {
       clearPassword();
       handleUsernameExists();
