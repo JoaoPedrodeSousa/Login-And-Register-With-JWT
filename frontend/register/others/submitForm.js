@@ -22,6 +22,8 @@ export default async function submitForm(event) {
       throw new Error(
         `User with name ${formData.get("username")} already exists`
       );
+    } else if (response.status !== response.ok) {
+      throw new Error(`It's not possible init`);
     }
   } catch (error) {
     handleError(form, error);
