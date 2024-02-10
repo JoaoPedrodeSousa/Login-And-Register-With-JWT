@@ -87,7 +87,12 @@ input {
   background: #f0f8ff;
   border: 2px solid black;
   padding: 5px;
-  border-color: 115px;
+  border-radius: 4px;
+}
+
+input:focus {
+  outline: none;
+  border: 2px solid rgb(4, 170, 170);
 }
 
 a {

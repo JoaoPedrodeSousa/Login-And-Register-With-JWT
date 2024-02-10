@@ -3,13 +3,11 @@ package com.example.ApiLogin.controllers;
 import com.example.ApiLogin.entities.*;
 import com.example.ApiLogin.infra.security.JWTGenerator;
 import com.example.ApiLogin.repositories.UserRepository;
-import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-//@CrossOrigin(origins = "http://127.0.0.1:5500/")
 @RequestMapping(value = "/auth")
 public class AuthenticationController {
     @Autowired
@@ -45,7 +42,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity register(@RequestBody RegisterDTO data){
+    public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
         if(repository.findByUsername(data.username()) != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
