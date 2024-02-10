@@ -57,7 +57,7 @@ public class AuthenticationController {
 
         System.out.println(data.username());
         System.out.println(data.password());
-        return ResponseEntity.ok("You are logged");
+        return ResponseEntity.ok().build();
     }
 }
 
