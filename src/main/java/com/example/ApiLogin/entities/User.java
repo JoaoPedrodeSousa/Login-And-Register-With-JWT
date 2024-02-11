@@ -15,28 +15,28 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String username;
+    private String email;
     private String password;
-    private UserRole role;
 
     public User() {
     }
 
-    public User(String username, String password){
+    public User(String username, String email, String password){
         this.username = username;
+        this.email = email;
         this.password = password;
     }
 
-    public User(String id, String username, String password, UserRole role) {
+    public User(String id, String username,String email, String password) {
         this.id = id;
         this.username = username;
+        this.email = email;
         this.password = password;
-        this.role = role;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
@@ -47,6 +47,14 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
