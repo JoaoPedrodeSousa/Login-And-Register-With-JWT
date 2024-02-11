@@ -144,9 +144,9 @@ a:hover {
   backface-visibility: hidden;
 }
 
-/* .success {
+.success {
   transform: rotateY(180deg);
-} */
+}
 
 .success-inner {
   display: grid;
