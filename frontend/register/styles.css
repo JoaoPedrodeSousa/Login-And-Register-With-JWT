@@ -147,3 +147,23 @@ a:hover {
 /* .success {
   transform: rotateY(180deg);
 } */
+
+.success-inner {
+  display: grid;
+  place-items: center;
+  gap: var(--gap-1);
+}
+
+.img-container img {
+  border: 3px solid var(--cor-2);
+  border-radius: 50%;
+}
+
+.success-info {
+  font-size: var(--font-text);
+  place-items: center;
+  gap: var(--gap-1);
+}
+.success-info a {
+  font-size: 24px;
+}
