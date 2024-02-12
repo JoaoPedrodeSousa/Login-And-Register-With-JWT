@@ -2,7 +2,7 @@ import handleError from "./handleError.js";
 import flipCard from "./flipCard.js";
 
 const form = document.querySelector(".form-container");
-const url = "http://localhost:8080/auth/register";
+const url = "http://localhost:8080/auth/login";
 
 export default async function submitForm(event) {
   event.preventDefault();
@@ -19,12 +19,11 @@ export default async function submitForm(event) {
       body: JSON.stringify(data),
     });
 
-    if (response.status === 400) {
-      throw new Error(
-        `User with name ${formData.get("username")} already exists`
-      );
+    if (response.status === 403) {
+      throw new Error(`User with name ${formData.get("username")} not exists`);
     } else if (response.ok) {
       flipCard();
+      console.log(document.cookie);
     }
   } catch (error) {
     handleError(form, error);

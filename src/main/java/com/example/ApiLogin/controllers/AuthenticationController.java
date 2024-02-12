@@ -7,6 +7,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,10 +36,11 @@ public class AuthenticationController {
 
         cookie.setHttpOnly(true);
         cookie.setMaxAge(JWTConstants.JWT_EXPIRATION / 1000);
+        cookie.setPath("/");
 
         response.addCookie(cookie);
 
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
     }
 
     @PostMapping(value = "/register")
