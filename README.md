@@ -5,33 +5,34 @@
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
 
-Esta API foi projetada e desenvolvida em Java que fornece endpoints que permitem o registro e autenticação de usuários.
-Com esta API os usuários podem se cadastrar e ter suas informações autenticadas.
+Essa API foi projetada e desenvolvida utilizando Java, oferecendo endpoints que viabilizam o registro e a autenticação de usuários. Por meio dessa API, os usuários podem efetuar o cadastro e validar suas informações.
 
-``TECNOLOGIAS UTILIZADAS:`` **Java, Spring Boot, PostgreSQL, Spring Security e Json Web Token (JWT).**
+`TECNOLOGIAS UTILIZADAS:` **Java, Spring Boot, PostgreSQL, Spring Security e Json Web Token (JWT).**
 
 ## Instalação
 
 1. Clone o repoitório para sua máquina local:
 
-``` bash
+```bash
 git clone https://github.com/JoaoPedrodeSousa/Api-Login.git
 ```
 
-2. Instale as dependências utilizando Maven ou Gradle;
+2. Instale as dependências utilizando Maven;
 3. Instale o banco de dados PostgreSQL;
-4. Crie um database com o nome LoginAPI, conforme exemplo abaixo:
+4. Crie um database com o nome LoginAPI, conforme abaixo:
 
-``` SQL
+```SQL
 CREATE DATABASE LoginAPI;
 ```
 
 5. Execute o projeto.
 
-Configuração
+## Configuração
+
 A API requer as seguintes variáveis de ambiente para funcionar corretamente:
 
 `PORT: 8080`: Porta na qual o servidor será executado.
+
 `PORT: 5432`: Porta na qual o Banco de Dados será executado.
 
 ## Endpoints
@@ -40,7 +41,7 @@ A API possui os seguintes endpoints disponíveis:
 
 - `POST /register`: Registra novos usuários;
 
-``` bash
+```bash
     POST http://localhost:8080/register
     {
         "username" : "Fulano de tal",
@@ -50,7 +51,7 @@ A API possui os seguintes endpoints disponíveis:
 
 - `POST /login`: Loga usuários autenticados no sistema;
 
-``` bash
+```bash
     POST http://localhost:8080/login
     {
         "username" : "Fulano de tal",
@@ -58,9 +59,7 @@ A API possui os seguintes endpoints disponíveis:
     }
 ```
 
-
 ## Segurança e Autenticação
 
-- ``Autenticação baseada em token``: Foi utilizado ``Json Web Token`` (JWT) para autenticar solicitações. Os tokens são armazenados em cookies;
-- ``Criptografia BCrypt:`` Método de criptografia do tipo hash para senhas.
-
+- `Autenticação baseada em token`: Foi utilizado `Json Web Token` (JWT) para autenticar solicitações. Os tokens são armazenados em cookies;
+- `Criptografia BCrypt:` Método de criptografia do tipo hash para senhas.
