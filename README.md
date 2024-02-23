@@ -45,6 +45,7 @@ A API possui os seguintes endpoints disponíveis:
     POST http://localhost:8080/auth/register
     {
         "username" : "Fulano de tal",
+        "email" : "fulanoDeTal@email.com",
         "password" : "123456789"
     }
 ```
