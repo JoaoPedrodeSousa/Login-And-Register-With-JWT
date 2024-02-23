@@ -42,7 +42,7 @@ A API possui os seguintes endpoints disponíveis:
 - `POST /register`: Registra novos usuários;
 
 ```bash
-    POST http://localhost:8080/register
+    POST http://localhost:8080/auth/register
     {
         "username" : "Fulano de tal",
         "password" : "123456789"
@@ -52,7 +52,7 @@ A API possui os seguintes endpoints disponíveis:
 - `POST /login`: Loga usuários autenticados no sistema;
 
 ```bash
-    POST http://localhost:8080/login
+    POST http://localhost:8080/auth/login
     {
         "username" : "Fulano de tal",
         "password" : "123456789"
